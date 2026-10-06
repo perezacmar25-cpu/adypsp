@@ -2,23 +2,32 @@ package com.example.salesianos.demo;
 
 public record AlumnoDTO (
         String name,
-                         String apellido1,
-                         String apellido2,
-                         String telefono
-){
+        String apellido1,
+        String apellido2,
+        String telefono,
+        String email
 
-public static AlumnoDTO of(Alumno a){
+        ){
 
-    if(a == null){
-        return null;
-    }
-    return new AlumnoDTO(
-            a.getName(),
-            a.getApellido1(),
-            a.getApellido2(),
-            a.getCurso()
-    );
+        public static AlumnoDTO of(Alumno alumno){
+
+            if(alumno == null)
+                return null;
+
+            return new AlumnoDTO(
+                    alumno.getName(),
+                    alumno.getApellido1(),
+                    alumno.getApellido2(),
+                    alumno.getCurso(),
+                    alumno.getTelefono()
+            );
+
+
+        }
+
+
+
 }
 
 
-}
+
