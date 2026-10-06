@@ -1,16 +1,23 @@
 package com.salesianos.dam.primerjemplo.service;
 
 
+import com.salesianos.dam.primerjemplo.dto.EditCategoriaDTO;
+import com.salesianos.dam.primerjemplo.error.CategoryNotFoundException;
 import com.salesianos.dam.primerjemplo.model.Category;
 import com.salesianos.dam.primerjemplo.repo.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+
+
 
     public List<Category> getAllCategories(){
         List<Category> lista = categoryRepository.findAll();
@@ -28,7 +35,29 @@ public class CategoryService {
     }
 
     public void addCategory(Category c){
-
         categoryRepository.save(c);
+    }
+
+    public void validateCategory(EditCategoriaDTO editCategoriaDTO){
+        if(!StringUtils.hasText(editCategoriaDTO.name())){
+            throw new CategoryNotFoundException("Categoría inválida");
+        }
+    }
+
+    public void deleteCategory(Long id){
+
+        categoryRepository.deleteById(id);
+    }
+
+    public Category updateCategory(Long id,EditCategoriaDTO editCategoriaDTO){
+        return categoryRepository.findById(id)
+                .map(c->
+                        validateCategory(editCategoriaDTO);
+
+
+                                
+
+                )
+
     }
 }
